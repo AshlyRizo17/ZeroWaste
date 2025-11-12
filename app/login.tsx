@@ -11,7 +11,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import ForgotPassword from "./ForgotPassword";
 
-export default function LoginScreen(): JSX.Element {
+export default function LoginScreen(): React.ReactElement {
   const router = useRouter();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -33,7 +33,7 @@ export default function LoginScreen(): JSX.Element {
 
     if (user && user.email === email && user.password === password) {
       Alert.alert("Bienvenido", `Sesión iniciada como ${user.name}`);
-      router.replace("/notas");
+      router.replace("/ZeroWasteHome");
     } else {
       Alert.alert("Error", "Correo o contraseña incorrectos");
     }

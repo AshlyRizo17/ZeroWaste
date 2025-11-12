@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
-import NotasScreen from "./notas";
+// Nota: eliminamos el import de `./notas` porque no se utiliza aquí
 
 export default function RegisterScreen() {
   const router = useRouter();
@@ -25,13 +25,21 @@ export default function RegisterScreen() {
     }
 
     try {
-      const newUser = { name, email, password };
+      // Creamos un usuario inicial compatible con la pantalla de recompensas
+      const newUser = {
+        id: Date.now().toString(),
+        name,
+        email,
+        password,
+        points: 0, // inicia con 0 puntos
+      };
 
       // Guardar usuario en AsyncStorage
       await AsyncStorage.setItem("user", JSON.stringify(newUser));
 
       Alert.alert("Registro exitoso", `Usuario ${name} registrado correctamente`);
-      router.replace("/notas");
+      // Redirigimos al home (ruta válida) tras el registro
+      router.replace("/home");
     } catch (error) {
       Alert.alert("Error", "No se pudo registrar el usuario");
     }
@@ -66,7 +74,7 @@ export default function RegisterScreen() {
 
       <Button title="Registrarse" onPress={handleRegister} color="#007AFF" />
 
-      <TouchableOpacity onPress={() => router.push("/")}>
+  <TouchableOpacity onPress={() => router.push("/login")}>
         <Text style={styles.link}>¿Ya tienes cuenta? Inicia sesión</Text>
       </TouchableOpacity>
     </View>
