@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
+import ForgotPassword from "./ForgotPassword";
 
-export default function LoginScreen() {
+export default function LoginScreen(): JSX.Element {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
@@ -17,7 +25,7 @@ export default function LoginScreen() {
     loadUser();
   }, []);
 
-  const handleLogin = () => {
+  const handleLogin = (): void => {
     if (!email || !password) {
       Alert.alert("Error", "Por favor completa todos los campos");
       return;
@@ -41,6 +49,7 @@ export default function LoginScreen() {
         keyboardType="email-address"
         value={email}
         onChangeText={setEmail}
+        autoCapitalize="none"
       />
 
       <TextInput
@@ -55,6 +64,12 @@ export default function LoginScreen() {
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
 
+      {/* 🔹 Enlace para recuperar contraseña */}
+      <TouchableOpacity onPress={() => router.push("/ForgotPassword")}>
+        <Text style={styles.link}>¿Olvidaste tu contraseña?</Text>
+      </TouchableOpacity>
+
+      {/* 🔹 Enlace para registro */}
       <TouchableOpacity onPress={() => router.push("/register")}>
         <Text style={styles.link}>¿No tienes cuenta? Regístrate</Text>
       </TouchableOpacity>
